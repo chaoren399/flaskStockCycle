@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+         <title>单股票走势</title>
+   </head>
+   <body style="height: 80%; margin: 0">
+       <div id="container" style="height: 100%"> </div>
+
+
+        stock_pool_path = BASE_DIR + '/st_pool/get_stock_data_2019/股票池.csv'
+
+        <script type="text/javascript" src="/static/js/echarts.min.js"></script>
+{#       <script type="text/javascript" src="/Users/zzy/PycharmProjects/python-workspace/stock/static/js/echarts.min.js"></script>#}
+{#       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>#}
+
+
+
+{#       https://echarts.baidu.com/examples/editor.html?c=line-simple  #}
+<script type="text/javascript">
+
+var data = {{ data|safe }};
+var stockinfo = {{ stockinfo|safe }};
+var maxmin = {{ maxmin|safe }};
+
+
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+
+
+
+var datatime = data.map(function (item) {
+            return item[0];
+        });
+var datavalue = data.map(function (item) {
+            return item[1];
+        });
+
+
+
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            {#text: stockinfo['code']+':'+stockinfo['name'] //#股票名称#}
+            text: 'code'+':'+'name'//#股票名称
+
+        },
+        tooltip: {
+            trigger: 'axis',
+            position: function (pt) {
+                return [pt[0], '10%'];
+            }
+        },
+        legend: {
+            data: ['销量1']
+        },
+        xAxis: {
+            {#data: datatime#}
+            data: 222222
+        },
+        yAxis: {},
+        series: {
+            name: '收盘价',
+            type: 'line',
+            data: datavalue,
+            markLine: {
+                symbol:"none",               //去掉警戒线最后面的箭头
+
+                silent: true,
+                data: [{
+                    {#yAxis: maxmin['min']   //最低值#}
+                    yAxis:  10   //最低值
+                }, {
+                    {#yAxis: maxmin['max']   //最高值#}
+                    yAxis: 20   //最高值
+                },]
+            }
+        }
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+       </script>
+   </body>
+
+
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
