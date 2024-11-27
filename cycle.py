@@ -1,13 +1,70 @@
-from urllib import request
-
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
-import numpy as np
+
 app = Flask(__name__)
 
+CSV_FILE = 'data.csv'
+# CSV_FILE = 'data1.csv'
 
-@app.route('/')
+#1 情绪图展示页：
+
+# 1 baimei ，csv数据编辑页
+@app.route('/baimei')
 def index():
+    df = pd.read_csv(CSV_FILE)
+    return render_template('index.html', data=df.to_dict(orient='records'))
+
+
+# 编辑页面：显示和处理编辑操作
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    df = pd.read_csv(CSV_FILE)
+
+    if request.method == 'POST':
+        # 更新数据
+        df.at[id, '日期'] = request.form['日期']
+        df.at[id, '每日涨停数'] = request.form['每日涨停数']
+        df.at[id, '每日交易量'] = request.form['每日交易量']
+        df.at[id, '上涨比率'] = request.form['上涨比率']
+        df.at[id, '连板数'] = request.form['连板数']
+        df.at[id, '最高板'] = request.form['最高板']
+        df.at[id, '大面数'] = request.form['大面数']
+        df.at[id, '其他'] = request.form['其他']
+
+        df.to_csv(CSV_FILE, index=False)
+        return redirect(url_for('index'))
+
+    row = df.iloc[id].to_dict()
+    return render_template('edit.html', row=row, id=id)
+
+
+# 新增页面：显示和处理新增操作
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        new_data = {
+            '日期': request.form['日期'],
+            '每日涨停数': request.form['每日涨停数'],
+            '每日交易量': request.form['每日交易量'],
+            '上涨比率': request.form['上涨比率'],
+            '连板数': request.form['连板数'],
+            '最高板': request.form['最高板'],
+            '大面数': request.form['大面数'],
+            '其他': request.form['其他']
+        }
+
+        df = pd.read_csv(CSV_FILE)
+        # 将新数据插入到 DataFrame 的第一行
+        df = pd.concat([pd.DataFrame([new_data]), df], ignore_index=True)
+        df.to_csv(CSV_FILE, index=False)
+        return redirect(url_for('index'))
+
+    return render_template('add.html')
+
+
+# 2 周期图展示页
+@app.route('/zhouqi')
+def zhouqi():
     msg = " \n my name is baimeidashu.com , China up!"
 
     if(0):
@@ -26,18 +83,18 @@ def index():
     #日期
     df0=df.iloc[:,0].values.tolist() #把列转化为数组格式为了支持js
 
-
+    print(df0)
    #每日涨停数
     df1=df.iloc[:,1].values.tolist()
     #每日交易量（万亿）
 
-    df2=df.iloc[:,1].values.tolist()
+    df2=df.iloc[:,2].values.tolist()
     #,上涨比率,
-    df3=df.iloc[:,2].values.tolist()
+    df3=df.iloc[:,3].values.tolist()
     #最高连板,最高板
-    df4=df.iloc[:,3].values.tolist()
+    df4=df.iloc[:,4].values.tolist()
     #最高板
-    df5=df.iloc[:,4].values.tolist()
+    df5=df.iloc[:,5].values.tolist()
 
 
 
@@ -46,30 +103,9 @@ def index():
 
     return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5)
 
-@app.route('/getdata')
-def getdata():
-    stockdata_path = './data/test.csv'
-    # print stockdata_path
-    df = pd.read_csv(stockdata_path, index_col=0)
-    stockinfo=df
-    print(df)
-
-
-    return render_template('cycle.html', stockinfo=stockinfo)
 
 
 
-@app.route('/loginProcess',methods=['POST','GET'])
-def loginProcesspage():
-    if request.method=='POST':
-        nm=request.form['nm']
-        pwd=request.form['pwd']
-        if nm=='cao' and pwd=='123':
-            session['username']=nm             #使用session存储方式，session默认为数组，给定key和value即可
-            return redirect(url_for('index'))  #重定向跳转到首页
-        else:
-            return 'the username or userpwd does not match!'
 
-if __name__ == "__main__":
-    # app.run(port=2020, host="127.0.0.1", debug=True)
-    app.run(port=2020, host="0.0.0.0")
+if __name__ == '__main__':
+    app.run(debug=True)

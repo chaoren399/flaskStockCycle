@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑数据</title>
+</head>
+<body>
+    <h1>编辑数据</h1>
+    <form method="post">
+        <label for="日期">日期:</label>
+        <input type="text" name="日期" value="{{ row['日期'] }}"><br>
+        <label for="每日涨停数">每日涨停数:</label>
+        <input type="text" name="每日涨停数" value="{{ row['每日涨停数'] }}"><br>
+        <label for="每日交易量">每日交易量:</label>
+        <input type="text" name="每日交易量" value="{{ row['每日交易量'] }}"><br>
+        <label for="上涨比率">上涨比率:</label>
+        <input type="text" name="上涨比率" value="{{ row['上涨比率'] }}"><br>
+        <label for="连板数">连板数:</label>
+        <input type="text" name="连板数" value="{{ row['连板数'] }}"><br>
+        <label for="最高板">最高板:</label>
+        <input type="text" name="最高板" value="{{ row['最高板'] }}"><br>
+        <label for="大面数">大面数:</label>
+        <input type="text" name="大面数" value="{{ row['大面数'] }}"><br>
+        <label for="其他">其他:</label>
+        <input type="text" name="其他" value="{{ row['其他'] }}"><br>
+        <button type="submit">保存</button>
+    </form>
+    <a href="{{ url_for('index') }}">返回首页</a>
+</body>
+</html>
