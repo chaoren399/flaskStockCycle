@@ -107,5 +107,52 @@ def zhouqi():
 
 
 
+# 2 周期图展示页
+@app.route('/qingxu')
+def qingxu():
+    msg = " \n my name is baimeidashu.com , China up!"
+
+
+
+    # stockdata_path = './data/example.csv'
+    stockdata_path = 'data.csv'
+
+    df = pd.read_csv(stockdata_path)
+
+    # 按照索引进行倒序排序
+    df = df.sort_index(ascending=False)
+    #日期
+    df0=df.iloc[:,0].values.tolist() #把列转化为数组格式为了支持js
+
+    print(df0)
+   #每日涨停数
+    df1=df.iloc[:,1].values.tolist()
+    #每日交易量（万亿）
+    df2=df.iloc[:,2].values.tolist()
+    #,上涨比率,
+    df3=df.iloc[:,3].values.tolist()
+    #最高连板,最高板
+    df4=df.iloc[:,4].values.tolist()
+    #最高板
+    df5=df.iloc[:,5].values.tolist()
+
+    #大面数
+    df6=df.iloc[:,6].values.tolist()
+
+
+
+    print( df2)
+    print( df)
+
+
+
+    # print(df_sorted_index)
+
+
+    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6)
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
