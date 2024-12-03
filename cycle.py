@@ -96,15 +96,23 @@ def zhouqi():
     #最高板
     df5=df.iloc[:,5].values.tolist()
 
+    #大面数
+    df6=df.iloc[:,6].values.tolist()
+
+    #最高板名称
+    df7=df.iloc[:,7].values.tolist()
+
 
 
     print( df2)
 
 
-    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5)
+    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7)
 
 
-
+@app.route('/test')
+def test():
+    return render_template('./demo/test.html')
 
 
 # 2 周期图展示页
@@ -139,7 +147,8 @@ def qingxu():
     #大面数
     df6=df.iloc[:,6].values.tolist()
 
-
+    #最高板名称
+    df7=df.iloc[:,7].values.tolist()
 
     print( df2)
     print( df)
@@ -149,7 +158,7 @@ def qingxu():
     # print(df_sorted_index)
 
 
-    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6)
+    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7)
 
 
 

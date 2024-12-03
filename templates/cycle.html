@@ -22,6 +22,8 @@
 
 {#<div id="main2" style="width: 800px;height:500px;margin: 0 auto;"></div>#}
 
+<div id="main0" style="width: 1000px;height:300px;margin: 0 auto;"></div>
+
 <div id="main1" style="width: 1000px;height:300px;margin: 0 auto;"></div>
 {#上涨比率 main2#}
 <div id="main2" style="width: 1000px;height:300px;margin: 0 auto;"></div>
@@ -36,6 +38,111 @@
 <div id="main6" style="width: 1000px;height:300px;margin: 0 auto;"></div>
 {#每日交易量7#}
 <div id="main7" style="width: 1000px;height:300px;margin: 0 auto;"></div>
+
+
+{#--------------模块0--最高板名称-----------------#}
+<script type="text/javascript">
+     {#    日期#}
+    var df0 = {{ df0|safe }};
+    {#   每日涨停数#}
+    var df1 = {{ df1|safe }};
+    {#  #每日交易量（万亿）#}
+    var df2 = {{ df2|safe }};
+    {#上涨比率#}
+    var df3 = {{ df3|safe }};
+    {#连板数#}
+    var df4 = {{ df4|safe }};
+    {#最高板#}
+    var df5 = {{ df5|safe }};
+
+    {#大面数#}
+    var df6 = {{ df6|safe }};
+    {#最高板名称#}
+    var df7 = {{ df7|safe }};
+
+    {#console.log('df1' + df1)#}
+    console.log('df2' + df2)
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main0'));
+    // 指定图表的配置项和数据
+        var   option = {
+                title : {
+                    text: '最高板名称-',
+                    subtext: ''
+                },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['最高板名称-']
+               {#data:['最高气温','最低气温']#}
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: false, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: false}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    {#data : ['周一','周二','周三','周四','周五','周六','周日']#}
+                    {#data : df0#}
+                    data : df7
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    axisLabel : {
+                        {#formatter: '{value} °C'#}
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series : [
+
+                {
+                    name:'最高板名称-',
+                    type:'line',
+                    {#data:[1, -2, 2, 5, 3, 2, 0],#}
+                    data:df0,
+                    symbolSize: 10, // 设置圆点大小为10
+                },
+
+                    {
+                          name: 'line',
+                          type: 'line',
+                          stack: 'all',
+                          symbolSize: 6,
+                          markLine: {
+                            data: [
+                                  {
+                                "name": "冰点线",
+                                "yAxis": 20,
+                                "label": {
+                                  "formatter": "{b}",
+                                  "position": "end"
+                                }
+                              },
+                              ],
+                            label: {
+                              distance: [40, 8],
+                            }
+                          }
+                }
+
+            ]
+        };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
 
 {#--------------模块1--上涨比率 -----------------#}
 <script type="text/javascript">
@@ -171,7 +278,7 @@
                 trigger: 'axis'
             },
             legend: {
-                data:['上涨比率']
+                data:['连板数']
                {#data:['最高气温','最低气温']#}
             },
             toolbox: {
@@ -210,6 +317,7 @@
                     {#data:[1, -2, 2, 5, 3, 2, 0],#}
                     data:df4,
                     symbolSize: 10, // 设置圆点大小为10
+                    itemStyle : { normal: {label : {show: true}}}
                 },
 
                     {
@@ -307,33 +415,21 @@
             series : [
 
                 {
-                    name:'连板数',
+                    name:'最高板',
                     type:'line',
                     {#data:[1, -2, 2, 5, 3, 2, 0],#}
                     data:df5,
                     symbolSize: 10, // 设置圆点大小为10
+                    itemStyle : { normal: {label : {show: true}}}
+
                 },
 
                     {
                           name: 'line',
                           type: 'line',
                           stack: 'all',
-                          symbolSize: 6,
-                          markLine: {
-                            data: [
-                                  {
-                                "name": "冰点线",
-                                "yAxis": 10,
-                                "label": {
-                                  "formatter": "{b}",
-                                  "position": "end"
-                                }
-                              },
-                              ],
-                            label: {
-                              distance: [40, 8],
-                            }
-                          }
+                          symbolSize: 6
+
                 }
 
             ]
@@ -420,22 +516,8 @@
                           name: 'line',
                           type: 'line',
                           stack: 'all',
-                          symbolSize: 6,
-                          markLine: {
-                            data: [
-                                  {
-                                "name": "冰点线",
-                                "yAxis": 10,
-                                "label": {
-                                  "formatter": "{b}",
-                                  "position": "end"
-                                }
-                              },
-                              ],
-                            label: {
-                              distance: [40, 8],
-                            }
-                          }
+                          symbolSize: 6
+
                 }
 
             ]
@@ -524,22 +606,8 @@
                           name: 'line',
                           type: 'line',
                           stack: 'all',
-                          symbolSize: 6,
-                          markLine: {
-                            data: [
-                                  {
-                                "name": "冰点线",
-                                "yAxis": 10,
-                                "label": {
-                                  "formatter": "{b}",
-                                  "position": "end"
-                                }
-                              },
-                              ],
-                            label: {
-                              distance: [40, 8],
-                            }
-                          }
+                          symbolSize: 6
+
                 }
 
             ]
@@ -609,6 +677,7 @@ option = {
       name: '每日交易量',
       type: 'bar',
       barWidth: '20%',
+        itemStyle : { normal: {label : {show: true}}},
       data: df2
     }
   ]

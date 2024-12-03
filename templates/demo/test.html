@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ECharts Line Chart with Date and Text on X Axis</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的 DOM，初始化 echarts 实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'ECharts Line Chart with Date and Text on X Axis'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                type: 'category',
+                data: [
+                    { date: '2023-10-01', text: '国庆节' },
+                    { date: '2023-10-02', text: '第二天' },
+                    { date: '2023-10-03', text: '第三天' },
+                    { date: '2023-10-04', text: '第四天' },
+                    { date: '2023-10-05', text: '第五天' },
+                    { date: '2023-10-06', text: '第六天' },
+                    { date: '2023-10-07', text: '第七天' }
+                ],
+                axisLabel: {
+                    interval: 0,
+                    formatter: function (value) {
+                        return value.date + '\n' + value.text;
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '销量',
+                type: 'line',
+                data: [5, 20, 36, 10, 10, 20, 15]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
