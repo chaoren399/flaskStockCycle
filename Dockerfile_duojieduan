@@ -1,0 +1,31 @@
+FROM  bitnami/git:2.46.0  AS gitclone
+ARG url=https://gitee.com/wang-huamao/flaskStockCycle.git
+ARG appName=flaskStockCycle
+RUN git clone $url
+RUN mv $appName  /app
+
+
+
+
+# 使用官方的Python运行时作为父镜像
+#FROM python:3.9
+FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9
+##第2部分： 维护者信息
+LABEL  mainatiner="baimeidashu"
+
+##第3部分： 镜像操作指令
+#设置工作目录为/app
+WORKDIR /app
+
+COPY .  /app
+
+# 将/etc/localtime链接到上海时区文件
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+#暴露的端口号与入口文件定义的端口号保持一致
+EXPOSE 2020
+
+
+##第4部分： CMD 命令
+# 当容器启动时运行python demo1.py
+CMD ["python3","cycle.py"]
