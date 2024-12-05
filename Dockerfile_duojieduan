@@ -12,6 +12,8 @@ FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9 AS prepare
 
 COPY --from=gitclone  /app/requirements.txt   /app/
 
+RUN cat /app/requirements.txt
+
 ## 安装依赖
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
 
@@ -20,7 +22,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 
 
-# 使用官方的Python运行时作为父镜像
+#3 使用官方的Python运行时作为父镜像
 #FROM python:3.9
 #FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9
 FROM prepare
