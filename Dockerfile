@@ -35,7 +35,9 @@ LABEL  mainatiner="baimeidashu"
 ##第3部分： 镜像操作指令
 #设置工作目录为/app
 WORKDIR /app
-COPY --from=gitclone  /app/*   /app/
+COPY --from=prepare  /app/*   /app/
+
+RUN ls -l
 
 # 将/etc/localtime链接到上海时区文件
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
