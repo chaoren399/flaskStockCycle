@@ -1,33 +1,49 @@
-##第一部分 基础镜像部分
-FROM centos:7.9.2009
+#FROM  bitnami/git:2.46.0  AS gitclone
+FROM  registry.cn-hangzhou.aliyuncs.com/baimeidashu/git:2.46.0  AS gitclone
+ARG url=https://gitee.com/wang-huamao/flaskStockCycle.git
+ARG appName=flaskStockCycle
+RUN git clone $url
+RUN mv $appName  /app
+
+
+
+#2 提前准备匹配库
+FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
+
+COPY --from=gitclone  /app/requirements.txt   /app/
+
+RUN cat /app/requirements.txt
+
+## 安装依赖
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
+
+
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+
+
+#3 使用官方的Python运行时作为父镜像
+#FROM python:3.9
+#FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9
+FROM prepare
 ##第2部分： 维护者信息
 LABEL  mainatiner="baimeidashu"
 
+
+
+
 ##第3部分： 镜像操作指令
-
-#添加软件源进行加速
-RUN curl  -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-
-#安装epel软件源
-RUN curl  -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
-
-
-RUN yum makecache fast;
-ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
-ENV PIP_TRUSTED_HOST=mirrors.aliyun.com
-
-RUN yum install python3-devel python3-pip -y
-
-RUN pip3 install  flask
-
 #设置工作目录为/app
 WORKDIR /app
-COPY .  /app
+COPY --from=gitclone  /app/*   /app/
 
+# 将/etc/localtime链接到上海时区文件
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 #暴露的端口号与入口文件定义的端口号保持一致
 EXPOSE 2020
 
 
 ##第4部分： CMD 命令
-CMD ["python3","demo1.py"]
+# 当容器启动时运行python demo1.py
+CMD ["python","cycle.py"]

@@ -8,7 +8,7 @@ RUN mv $appName  /app
 
 
 #2 提前准备匹配库
-FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9 AS prepare
+FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
 
 COPY --from=gitclone  /app/requirements.txt   /app/
 
@@ -46,4 +46,4 @@ EXPOSE 2020
 
 ##第4部分： CMD 命令
 # 当容器启动时运行python demo1.py
-CMD ["python3","cycle.py"]
+CMD ["python","cycle.py"]
