@@ -1,4 +1,5 @@
-FROM  bitnami/git:2.46.0  AS gitclone
+#FROM  bitnami/git:2.46.0  AS gitclone
+FROM  registry.cn-hangzhou.aliyuncs.com/baimeidashu/git:2.46.0  AS gitclone
 ARG url=https://gitee.com/wang-huamao/flaskStockCycle.git
 ARG appName=flaskStockCycle
 RUN git clone $url
@@ -13,11 +14,18 @@ FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9
 ##第2部分： 维护者信息
 LABEL  mainatiner="baimeidashu"
 
+
+
+
+
+
 ##第3部分： 镜像操作指令
 #设置工作目录为/app
 WORKDIR /app
+COPY --from=gitclone  /app/*   /app/
+## 安装依赖
 
-COPY .  /app
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # 将/etc/localtime链接到上海时区文件
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
