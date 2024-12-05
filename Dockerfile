@@ -8,9 +8,17 @@ RUN mv $appName  /app
 
 
 #2 提前准备匹配库
-FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
 
-COPY --from=gitclone  /app/requirements.txt   /app/
+
+
+#3 使用官方的Python运行时作为父镜像
+FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
+##第2部分： 维护者信息
+LABEL  mainatiner="baimeidashu"
+#设置工作目录为/app
+WORKDIR /app
+
+COPY --from=gitclone  /app   /app
 
 RUN cat /app/requirements.txt
 
@@ -22,20 +30,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 
 
-#3 使用官方的Python运行时作为父镜像
-#FROM python:3.9
-#FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.9
-FROM prepare
-##第2部分： 维护者信息
-LABEL  mainatiner="baimeidashu"
-
-
-
-
-##第3部分： 镜像操作指令
-#设置工作目录为/app
-WORKDIR /app
-COPY --from=prepare  /app/*   /app/
 
 RUN ls -l
 
