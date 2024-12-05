@@ -41,7 +41,7 @@ COPY --from=gitclone  /app/*   /app/
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 #暴露的端口号与入口文件定义的端口号保持一致
-EXPOSE 2020
+EXPOSE 5000
 
 
 ##第4部分： CMD 命令
