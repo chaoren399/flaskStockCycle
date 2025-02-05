@@ -128,7 +128,8 @@ def qingxu():
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
     # 获取最近90个数据条目
-    df = df.tail(60)
+    # df = df.tail(65)
+    df = df.head(65)
 
     # 按照索引进行倒序排序
     df = df.sort_index(ascending=False)
