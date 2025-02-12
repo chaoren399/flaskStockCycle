@@ -30,6 +30,8 @@ def edit(id):
         df.at[id, '最高板'] = request.form['最高板']
         df.at[id, '大面数'] = request.form['大面数']
         df.at[id, '其他'] = request.form['其他']
+        df.at[id, '压力高度'] = request.form['压力高度']
+        df.at[id, '其他2'] = request.form['其他2']
 
         df.to_csv(CSV_FILE, index=False)
         return redirect(url_for('index'))
@@ -50,7 +52,9 @@ def add():
             '连板数': request.form['连板数'],
             '最高板': request.form['最高板'],
             '大面数': request.form['大面数'],
-            '其他': request.form['其他']
+            '其他': request.form['其他'],
+            '压力高度': request.form['压力高度'],
+            '其他2': request.form['其他2']
         }
 
         df = pd.read_csv(CSV_FILE)
@@ -110,10 +114,6 @@ def zhouqi():
     return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7)
 
 
-@app.route('/test')
-def test():
-    return render_template('./demo/test.html')
-
 
 # 2 周期图展示页
 @app.route('/qingxu')
@@ -153,8 +153,13 @@ def qingxu():
 
     #最高板名称
     df7=df.iloc[:,7].values.tolist()
+    #压力高度
+    df8=df.iloc[:,8].values.tolist()
+    #其他2
+    df9=df.iloc[:,9].values.tolist()
 
     print( df2)
+    print ('------------------------qignxu------------------')
     print( df)
 
 
@@ -162,8 +167,60 @@ def qingxu():
     # print(df_sorted_index)
 
 
-    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7)
+    return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7,df8=df8,df9=df9)
 
+
+###########################以下是测试##########################
+@app.route('/test')
+def test():
+
+
+# stockdata_path = './data/example.csv'
+    stockdata_path = 'data.csv'
+
+    df = pd.read_csv(stockdata_path)
+    #获取最近3个月数据：
+    # 获取最近90个数据条目
+    # df = df.tail(65)
+    df = df.head(65)
+
+    # 按照索引进行倒序排序
+    df = df.sort_index(ascending=False)
+    #日期
+    df0=df.iloc[:,0].values.tolist() #把列转化为数组格式为了支持js
+
+    print(df0)
+   #每日涨停数
+    df1=df.iloc[:,1].values.tolist()
+    #每日交易量（万亿）
+    df2=df.iloc[:,2].values.tolist()
+    #,上涨比率,
+    df3=df.iloc[:,3].values.tolist()
+    #最高连板,最高板
+    df4=df.iloc[:,4].values.tolist()
+    #最高板
+    df5=df.iloc[:,5].values.tolist()
+
+    #大面数
+    df6=df.iloc[:,6].values.tolist()
+
+    #最高板名称
+    df7=df.iloc[:,7].values.tolist()
+    #压力高度
+    df8=df.iloc[:,8].values.tolist()
+    #其他2
+    df9=df.iloc[:,9].values.tolist()
+
+    print( df2)
+    print ('------------------------qignxu------------------')
+    print( df)
+
+
+
+    # print(df_sorted_index)
+
+
+    return render_template("./demo/test1.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7,df8=df8,df9=df9)
 
 
 

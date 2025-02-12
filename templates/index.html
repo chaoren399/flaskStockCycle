@@ -21,6 +21,8 @@
             <th>最高板</th>
             <th>大面数</th>
             <th>其他</th>
+            <th>压力高度</th>
+            <th>其他2</th>
             <th>操作</th>
         </tr>
         {% for row in data %}
@@ -33,6 +35,8 @@
             <td>{{ row['最高板'] }}</td>
             <td>{{ row['大面数'] }}</td>
             <td>{{ row['其他'] }}</td>
+            <td>{{ row['压力高度'] }}</td>
+            <td>{{ row['其他2'] }}</td>
             <td><a href="{{ url_for('edit', id=loop.index0) }}">编辑</a></td>
         </tr>
         {% endfor %}

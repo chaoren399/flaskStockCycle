@@ -366,19 +366,21 @@
 <script type="text/javascript">
      {#    日期#}
     var df0 = {{ df0|safe }};
-    {#   每日涨停数#}
-    var df1 = {{ df1|safe }};
-    {#  #每日交易量（万亿）#}
-    var df2 = {{ df2|safe }};
-    {#上涨比率#}
-    var df3 = {{ df3|safe }};
-    {#连板数#}
-    var df4 = {{ df4|safe }};
+
+
     {#最高板#}
     var df5 = {{ df5|safe }};
 
-    {#大面数#}
-    var df6 = {{ df6|safe }};
+
+
+        {#压力高度#}
+    var df8 = {{ df8|safe }};
+
+        var dateNum=40
+
+    df0 = df0.slice(-dateNum);
+    df5= df5.slice(-dateNum);
+    df8 = df8.slice(-dateNum);
 
     {#console.log('df1' + df1)#}
     console.log('df2' + df2)
@@ -428,12 +430,26 @@
             series : [
 
                 {
-                    name:'最高板',
+                    name:'压力高度',
+                    type:'line',
+                    {#data:[1, -2, 2, 5, 3, 2, 0],#}
+                    data:df8,
+                    symbolSize: 10, // 设置圆点大小为10
+                    lineStyle: {color: '#FF0000'}, // 纯红色的十六进制表示方式
+                    itemStyle : { normal: {label : {show: true}}}
+
+                },
+                                {
+                    name:'最高连板',
                     type:'line',
                     {#data:[1, -2, 2, 5, 3, 2, 0],#}
                     data:df5,
+                    lineStyle: {
+                        color: 'blue',
+                        type: 'dashed'
+                    },// 设置线的颜色为蓝色，虚线
                     symbolSize: 10, // 设置圆点大小为10
-                    itemStyle : { normal: {label : {show: true}}}
+                    itemStyle : { normal: {label : {show: false}}}
 
                 },
 
@@ -450,6 +466,7 @@
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 </script>
+
 
 
 {#--------------模块4- 大面数------------------#}
