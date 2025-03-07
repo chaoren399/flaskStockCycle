@@ -48,48 +48,41 @@
 
 </script>
 
-
-
-
-{#--------------模块3- 最高板------------------#}
+{#--------------模块0--最高板名称-----------------#}
 <script type="text/javascript">
      {#    日期#}
     var df0 = {{ df0|safe }};
     {#   每日涨停数#}
-
-
+    var df1 = {{ df1|safe }};
+    {#  #每日交易量（万亿）#}
+    var df2 = {{ df2|safe }};
+    {#上涨比率#}
+    var df3 = {{ df3|safe }};
+    {#连板数#}
+    var df4 = {{ df4|safe }};
     {#最高板#}
     var df5 = {{ df5|safe }};
 
-
-        {#压力高度#}
-    var df8 = {{ df8|safe }};
-
-
-    var dateNum=13
-    var df0_dateNum = df0.slice(-dateNum);
-    var df5_dateNum = df5.slice(-dateNum);
-    var df8_dateNum = df8.slice(-dateNum);
-    df0=df0_dateNum
-    df5=df5_dateNum
-    df8=df8_dateNum
-
+    {#大面数#}
+    var df6 = {{ df6|safe }};
+    {#最高板名称#}
+    var df7 = {{ df7|safe }};
 
     {#console.log('df1' + df1)#}
-
+    console.log('df2' + df2)
     // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main1'));
+    var myChart = echarts.init(document.getElementById('main0'));
     // 指定图表的配置项和数据
         var   option = {
                 title : {
-                    text: '最高板',
-                    subtext: '上涨空间'
+                    text: '最高板名称-',
+                    subtext: ''
                 },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['最高板']
+                data:['最高板名称-']
                {#data:['最高气温','最低气温']#}
             },
             toolbox: {
@@ -108,6 +101,7 @@
                     type : 'category',
                     boundaryGap : false,
                     {#data : ['周一','周二','周三','周四','周五','周六','周日']#}
+                    {#data : df0#}
                     data : df0
                 }
             ],
@@ -123,35 +117,33 @@
             series : [
 
                 {
-                    name:'最高板',
+                    name:'最高板名称-',
                     type:'line',
                     {#data:[1, -2, 2, 5, 3, 2, 0],#}
                     data:df5,
                     symbolSize: 10, // 设置圆点大小为10
-                    lineStyle: {color: '#FF0000'}, // 纯红色的十六进制表示方式
-                    itemStyle : { normal: {label : {show: true}}}
-
-                },
-                                {
-                    name:'压力高度',
-                    type:'line',
-                    {#data:[1, -2, 2, 5, 3, 2, 0],#}
-                    data:df8,
-                    lineStyle: {
-                        color: 'blue',
-                        type: 'dashed'
-                    },// 设置线的颜色为蓝色，虚线
-                    symbolSize: 10, // 设置圆点大小为10
-                    itemStyle : { normal: {label : {show: true}}}
-
                 },
 
                     {
                           name: 'line',
                           type: 'line',
                           stack: 'all',
-                          symbolSize: 6
-
+                          symbolSize: 6,
+                          markLine: {
+                            data: [
+                                  {
+                                "name": "冰点线",
+                                "yAxis": 20,
+                                "label": {
+                                  "formatter": "{b}",
+                                  "position": "end"
+                                }
+                              },
+                              ],
+                            label: {
+                              distance: [40, 8],
+                            }
+                          }
                 }
 
             ]
@@ -159,6 +151,9 @@
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 </script>
+
+
+
 
 
 

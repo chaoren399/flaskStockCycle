@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪高度图</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- 引入 ECharts 文件 -->
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>情绪高度图</h1>
+        <div id="main" style="width: 100%; height: 400px;"></div>
+    </div>
+
+    <script type="text/javascript">
+        var data = {{ df|tojson }};
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '情绪高度图'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                type: 'category',
+                data: data.map(item => item.date)
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '情绪值',
+                type: 'line',
+                data: data.map(item => item.value),
+                symbolSize: 6,
+                lineStyle: {
+                    width: 2
+                }
+            }],
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

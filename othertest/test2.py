@@ -1,42 +1,43 @@
+# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import pandas as pd
-
+# -*- coding: utf-8 -*-
 
 data = {
     'date': ['2025-02-06', '2025-02-07', '2025-02-10', '2025-02-11', '2025-02-12', '2025-02-13', '2025-02-14', '2025-02-17', '2025-02-18', '2025-02-19', '2025-02-20', '2025-02-21', '2025-02-24', '2025-02-25', '2025-02-26', '2025-02-27'],
     'pressure_height': [6, 7, 8, 9, 10, 10, 10, 8, 8, 8, 6, 7, 8, 8, 5, 5],
     'latest_height': [6, 7, 8, 9, 10, 10, 10, 8, 8, 8, 6, 7, 8, 8, 5, 5],
     'stocks': [
-        'ĞÂ¾æÍøÂç', 'ĞÂ¾æÍøÂç', 'ĞÂ¾æÍøÂç', 'ĞÂ¾æÍøÂç', 'ÃÎÍø¿Æ¼¼', 'ÃÎÍø¿Æ¼¼', 'ÍşÅÉ¸ñ', 'ÍşÅÉ¸ñ', 'º¼³İÇ°½ø', 'º¼³İÇ°½ø', '×¿Òí¿Æ¼¼', '×¿Òí¿Æ¼¼', '»¶ÈğÊÀ¼Í', 'Ê¥Ñô¹É·İ', '×¯Ô°ÄÁ³¡', '´óÎ»¿Æ¼¼'
+        'æ–°ç‚¬ç½‘ç»œ', 'æ–°ç‚¬ç½‘ç»œ', 'æ–°ç‚¬ç½‘ç»œ', 'æ–°ç‚¬ç½‘ç»œ', 'æ¢¦ç½‘ç§‘æŠ€', 'æ¢¦ç½‘ç§‘æŠ€', 'å¨æ´¾æ ¼', 'å¨æ´¾æ ¼', 'æ­é½¿å‰è¿›', 'æ­é½¿å‰è¿›', 'å“ç¿¼ç§‘æŠ€', 'å“ç¿¼ç§‘æŠ€', 'æ¬¢ç‘ä¸–çºª', 'åœ£é˜³è‚¡ä»½', 'åº„å›­ç‰§åœº', 'å¤§ä½ç§‘æŠ€'
     ]
 }
 
 df = pd.DataFrame(data)
 
-# ´´½¨Í¼±í
+# åˆ›å»ºå›¾è¡¨
 fig, ax = plt.subplots(figsize=(16, 8))
 
-# »æÖÆÑ¹Á¦¸ß¶ÈÕÛÏßÍ¼
-ax.plot(df['date'], df['pressure_height'], marker='o', linestyle='-', color='orange', label='Ñ¹Á¦¸ß¶È')
+# ç»˜åˆ¶å‹åŠ›é«˜åº¦æŠ˜çº¿å›¾
+ax.plot(df['date'], df['pressure_height'], marker='o', linestyle='-', color='orange', label='å‹åŠ›é«˜åº¦')
 for i, txt in enumerate(df['pressure_height']):
     ax.annotate(txt, (df['date'][i], df['pressure_height'][i]), textcoords="offset points", xytext=(0,10), ha='center')
 
-# »æÖÆ×îĞÂ¸ß¶ÈÕÛÏßÍ¼
-ax.plot(df['date'], df['latest_height'], marker='o', linestyle='--', color='purple', label='×îĞÂ¸ß¶È')
+# ç»˜åˆ¶æœ€æ–°é«˜åº¦æŠ˜çº¿å›¾
+ax.plot(df['date'], df['latest_height'], marker='o', linestyle='--', color='purple', label='æœ€æ–°é«˜åº¦')
 for i, txt in enumerate(df['latest_height']):
     ax.annotate(txt, (df['date'][i], df['latest_height'][i]), textcoords="offset points", xytext=(0,-10), ha='center')
 
-# ÉèÖÃÍ¼±í±êÌâºÍ±êÇ©
-ax.set_title('ÇéĞ÷¸ß¶ÈÍ¼')
-ax.set_xlabel('ÈÕÆÚ')
-ax.set_ylabel('¸ß¶ÈÖµ')
+# è®¾ç½®å›¾è¡¨æ ‡é¢˜å’Œæ ‡ç­¾
+ax.set_title('æƒ…ç»ªé«˜åº¦å›¾')
+ax.set_xlabel('æ—¥æœŸ')
+ax.set_ylabel('é«˜åº¦å€¼')
 ax.legend()
 
-# ÉèÖÃxÖá¿Ì¶È
+# è®¾ç½®xè½´åˆ»åº¦
 ax.set_xticks(df['date'])
 ax.set_xticklabels(df['date'], rotation=45)
 
-# ÏÔÊ¾±í¸ñ
+# æ˜¾ç¤ºè¡¨æ ¼
 table_data = [df.columns.values.tolist()] + df.values.tolist()
 table = plt.table(cellText=table_data[1:], colLabels=table_data[0], cellLoc='center', loc='bottom', bbox=[0, -0.5, 1, 0.5])
 

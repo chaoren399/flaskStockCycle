@@ -173,23 +173,14 @@ def qingxu():
 ###########################以下是测试##########################
 @app.route('/test')
 def test():
-
-
-# stockdata_path = './data/example.csv'
     stockdata_path = 'data.csv'
-
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
-    # 获取最近90个数据条目
-    # df = df.tail(65)
     df = df.head(65)
-
     # 按照索引进行倒序排序
     df = df.sort_index(ascending=False)
     #日期
     df0=df.iloc[:,0].values.tolist() #把列转化为数组格式为了支持js
-
-    print(df0)
    #每日涨停数
     df1=df.iloc[:,1].values.tolist()
     #每日交易量（万亿）
@@ -200,10 +191,8 @@ def test():
     df4=df.iloc[:,4].values.tolist()
     #最高板
     df5=df.iloc[:,5].values.tolist()
-
     #大面数
     df6=df.iloc[:,6].values.tolist()
-
     #最高板名称
     df7=df.iloc[:,7].values.tolist()
     #压力高度
@@ -211,18 +200,89 @@ def test():
     #其他2
     df9=df.iloc[:,9].values.tolist()
 
-    print( df2)
-    print ('------------------------qignxu------------------')
-    print( df)
-
-
-
-    # print(df_sorted_index)
-
-
     return render_template("./demo/test1.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7,df8=df8,df9=df9)
 
 
+@app.route('/test2')
+def test2():
+    stockdata_path = 'data.csv'
+    df = pd.read_csv(stockdata_path)
+    #获取最近3个月数据：
+    df = df.head(65)
+    # 按照索引进行倒序排序
+    df = df.sort_index(ascending=False)
+    #日期
+    df0=df.iloc[:,0].values.tolist() #把列转化为数组格式为了支持js
+   #每日涨停数
+    df1=df.iloc[:,1].values.tolist()
+    #每日交易量（万亿）
+    df2=df.iloc[:,2].values.tolist()
+    #,上涨比率,
+    df3=df.iloc[:,3].values.tolist()
+    #最高连板,最高板
+    df4=df.iloc[:,4].values.tolist()
+    #最高板
+    df5=df.iloc[:,5].values.tolist()
+    #大面数
+    df6=df.iloc[:,6].values.tolist()
+    #最高板名称
+    df7=df.iloc[:,7].values.tolist()
+    #压力高度
+    df8=df.iloc[:,8].values.tolist()
+    #其他2
+    df9=df.iloc[:,9].values.tolist()
+
+    return render_template("./demo/test2.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7,df8=df8,df9=df9)
+
+@app.route('/test3')
+def test3():
+    stockdata_path = 'data.csv'
+    df = pd.read_csv(stockdata_path)
+    #获取最近3个月数据：
+    # df = df.head(65)
+    # 按照索引进行倒序排序
+    df = df.sort_index(ascending=False)
+    #日期
+    df0=df.iloc[:,0].values.tolist() #把列转化为数组格式为了支持js
+   #每日涨停数
+    df1=df.iloc[:,1].values.tolist()
+    #每日交易量（万亿）
+    df2=df.iloc[:,2].values.tolist()
+    #,上涨比率,
+    df3=df.iloc[:,3].values.tolist()
+    #最高连板,最高板
+    df4=df.iloc[:,4].values.tolist()
+    #最高板
+    df5=df.iloc[:,5].values.tolist()
+    #大面数
+    df6=df.iloc[:,6].values.tolist()
+    #最高板名称
+    df7=df.iloc[:,7].values.tolist()
+    #压力高度
+    df8=df.iloc[:,8].values.tolist()
+    #其他2
+    df9=df.iloc[:,9].values.tolist()
+
+    return render_template("./demo/test3.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7,df8=df8,df9=df9)
+
+
+
+@app.route('/test4')
+def test4():
+    # 示例数据
+    data = {
+        'date': ['2025-02-12', '2025-02-13', '2025-02-14', '2025-02-17', '2025-02-18', '2025-02-19', '2025-02-20',
+                 '2025-02-21', '2025-02-24', '2025-02-25', '2025-02-26', '2025-02-27', '2025-02-28', '2025-03-03',
+                 '2025-03-04', '2025-03-05'],
+        'value': [10, 10, 8, 8, 6, 7, 8, 8, 8, 5, 4, 5, 6, 6, 4, 5],
+        'stocks': [
+            '新炬网络', '梦网科技', '梦网科技', '威派格', '杭齿前进', '杭齿前进', '杭齿前进', '卓翼科技', '卓翼科技',
+            '欢瑞世纪', '圣阳股份', '庄园牧场', '华丰股份', '恒为科技', '天正电气', '天正电气'
+        ]
+    }
+
+    df = pd.DataFrame(data)
+    return render_template('./demo/test4.html', df=df.to_dict(orient='records'))
 
 if __name__ == '__main__':
     # app.run(debug=True,host='0.0.0.0')
