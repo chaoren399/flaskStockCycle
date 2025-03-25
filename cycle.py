@@ -11,7 +11,8 @@ CSV_FILE = 'data.csv'
 # 1 baimei ，csv数据编辑页
 @app.route('/baimei')
 def index():
-    df = pd.read_csv(CSV_FILE)
+    # df = pd.read_csv(CSV_FILE)
+    df = pd.read_csv(CSV_FILE,dtype={"压力高度":int,"大面数":int,"最高板":int,"连板数":int,"每日涨停数":int})  #处理显示 一位小数的问题
     return render_template('index.html', data=df.to_dict(orient='records'))
 
 
@@ -129,7 +130,7 @@ def qingxu():
     #获取最近3个月数据：
     # 获取最近90个数据条目
     # df = df.tail(65)
-    df = df.head(65)
+    # df = df.head(65)
 
     # 按照索引进行倒序排序
     df = df.sort_index(ascending=False)
