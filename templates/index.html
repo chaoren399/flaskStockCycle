@@ -45,7 +45,7 @@
             <td>{{ row['每日涨停数'] }}</td>
             <td>{{ row['每日交易量'] }}</td>
 
-            <td {% if row['上涨比率']|float >= 5 and row['上涨比率']|float <= 25 %}class="ratio-low"{% endif %}>
+            <td {% if row['上涨比率']|float >= 1 and row['上涨比率']|float <= 25 %}class="ratio-low"{% endif %}>
                 {{ row['上涨比率'] }}
             </td>
             <td>{{ row['连板数'] }}</td>
