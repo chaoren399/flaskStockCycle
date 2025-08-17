@@ -23,6 +23,7 @@
             <th>其他</th>
             <th>压力高度</th>
             <th>跌停数量</th>
+            <th>封板率</th> <!-- 新增的封板率列 -->
             <th>操作</th>
         </tr>
         {% for row in data %}
@@ -37,6 +38,7 @@
             <td>{{ row['其他'] }}</td>
             <td>{{ row['压力高度'] }}</td>
             <td>{{ row['跌停数量'] }}</td>
+            <td>{{ row['封板率'] }}</td> <!-- 新增的封板率数据 -->
             <td><a href="{{ url_for('edit', id=loop.index0) }}">编辑</a></td>
         </tr>
         {% endfor %}

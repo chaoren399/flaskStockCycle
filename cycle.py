@@ -33,6 +33,7 @@ def edit(id):
         df.at[id, '其他'] = request.form['其他']
         df.at[id, '压力高度'] = request.form['压力高度']
         df.at[id, '跌停数量'] = request.form['跌停数量']
+        df.at[id, '封板率'] = request.form['封板率']  # 新增封板率字段
 
         df.to_csv(CSV_FILE, index=False)
         return redirect(url_for('index'))
@@ -55,7 +56,8 @@ def add():
             '大面数': request.form['大面数'],
             '其他': request.form['其他'],
             '压力高度': request.form['压力高度'],
-            '跌停数量': request.form['跌停数量']
+            '跌停数量': request.form['跌停数量'],
+            '封板率': request.form['封板率']  # 新增封板率字段
         }
 
         df = pd.read_csv(CSV_FILE)
