@@ -12,6 +12,12 @@
             color: black;
             font-size: 1.2em;
         }
+           .weekday {
+       font-size: 0.8em;
+       color: #666;
+   }
+
+
     </style>
 </head>
 <body>
@@ -24,6 +30,7 @@
     <table border="1">
         <tr>
             <th>日期</th>
+            <th>周几</th>
             <th>每日涨停数</th>
             <th>每日交易量</th>
             <th>上涨比率</th>
@@ -42,6 +49,7 @@
         {% for row in data %}
         <tr>
             <td>{{ row['日期'] }}</td>
+            <td class="weekday">{{ row['周几'] }}</td>
             <td>{{ row['每日涨停数'] }}</td>
             <td>{{ row['每日交易量'] }}</td>
 

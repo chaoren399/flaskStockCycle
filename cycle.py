@@ -14,10 +14,32 @@ def index():
 
     #处理 index.html  首页，显示数据带有小数的问问题
     #如果想让某一列显示整数，那么就添加这个表头
-
+    # Int64 类型可以处理 NaN 值
     df = pd.read_csv(CSV_FILE, dtype={"压力高度":'Int64',"大面数":'Int64',"最高板":'Int64',"连板数":'Int64',"每日涨停数":'Int64',"跌停数量":'Int64',"涨停数量":'Int64',"封板率":'Int64',"涨停打开":'Int64'})
 
-    # Int64 类型可以处理 NaN 值
+    #2025年8月17日 新增功能
+    # 添加星期几的计算（处理中文日期格式）
+    # 首先将中文日期格式转换为标准日期格式
+    df['日期'] = df['日期'].str.replace('年', '-').str.replace('月', '-').str.replace('日', '')
+    df['日期'] = pd.to_datetime(df['日期'], format='%Y-%m-%d', errors='coerce')
+    df['周几'] = df['日期'].dt.day_name()
+
+    # 中文星期映射
+    weekday_mapping = {
+        'Monday': '周一',
+        'Tuesday': '周二',
+        'Wednesday': '周三',
+        'Thursday': '周四',
+        'Friday': '周五',
+        'Saturday': '周六',
+        'Sunday': '周日'
+    }
+    df['周几'] = df['周几'].map(weekday_mapping).fillna('')
+
+    # 转换回中文日期格式用于显示
+    df['日期'] = df['日期'].dt.strftime('%Y年%m月%d日')
+
+
     return render_template('index.html', data=df.to_dict(orient='records'))
 
 
