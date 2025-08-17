@@ -28,10 +28,19 @@
         <label for="跌停数量">跌停数量:</label>
         <input type="text" name="跌停数量" value="{{ row['跌停数量'] }}"><br>
 
+        <label for="涨停数量">涨停数量:</label>  <!-- 新增涨停数量输入字段 -->
+        <input type="text" name="涨停数量" value="{{ row['涨停数量'] }}"><br>
 
 
         <label for="封板率">封板率:</label>  <!-- 新增封板率输入字段 -->
         <input type="text" name="封板率" value="{{ row['封板率'] }}"><br>
+
+        <label for="涨停打开">涨停打开:</label>  <!-- 新增涨停打开输入字段 -->
+        <input type="text" name="涨停打开" value="{{ row['涨停打开'] }}"><br>
+
+
+        <label for="备注">备注:</label>  <!-- 新增备注输入字段 -->
+        <input type="text" name="备注" value="{{ row['备注'] }}"><br>
 
 
         <button type="submit">保存</button>

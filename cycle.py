@@ -11,8 +11,13 @@ CSV_FILE = 'data.csv'
 # 1 baimei ，csv数据编辑页
 @app.route('/baimei')
 def index():
-    # df = pd.read_csv(CSV_FILE)
-    df = pd.read_csv(CSV_FILE,dtype={"压力高度":int,"大面数":int,"最高板":int,"连板数":int,"每日涨停数":int})  #处理显示 一位小数的问题
+
+    #处理 index.html  首页，显示数据带有小数的问问题
+    #如果想让某一列显示整数，那么就添加这个表头
+
+    df = pd.read_csv(CSV_FILE, dtype={"压力高度":'Int64',"大面数":'Int64',"最高板":'Int64',"连板数":'Int64',"每日涨停数":'Int64',"跌停数量":'Int64',"涨停数量":'Int64',"涨停打开":'Int64'})
+
+    # Int64 类型可以处理 NaN 值
     return render_template('index.html', data=df.to_dict(orient='records'))
 
 
@@ -33,7 +38,12 @@ def edit(id):
         df.at[id, '其他'] = request.form['其他']
         df.at[id, '压力高度'] = request.form['压力高度']
         df.at[id, '跌停数量'] = request.form['跌停数量']
+        df.at[id, '涨停数量'] = request.form['涨停数量']  # 新增涨停数量字段
+
         df.at[id, '封板率'] = request.form['封板率']  # 新增封板率字段
+
+        df.at[id, '涨停打开'] = request.form['涨停打开']  # 新增涨停打开字段
+        df.at[id, '备注'] = request.form['备注']  # 新增备注字段
 
         df.to_csv(CSV_FILE, index=False)
         return redirect(url_for('index'))
@@ -57,7 +67,10 @@ def add():
             '其他': request.form['其他'],
             '压力高度': request.form['压力高度'],
             '跌停数量': request.form['跌停数量'],
-            '封板率': request.form['封板率']  # 新增封板率字段
+            '涨停数量': request.form['涨停数量'], # 新增涨停数量字段
+            '封板率': request.form['封板率'],  # 新增封板率字段
+            '涨停打开': request.form['涨停打开'],  # 新增涨停打开字段
+            '备注': request.form['备注']  # 新增备注字段
         }
 
         df = pd.read_csv(CSV_FILE)
