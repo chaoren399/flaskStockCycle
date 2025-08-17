@@ -15,7 +15,7 @@ def index():
     #处理 index.html  首页，显示数据带有小数的问问题
     #如果想让某一列显示整数，那么就添加这个表头
 
-    df = pd.read_csv(CSV_FILE, dtype={"压力高度":'Int64',"大面数":'Int64',"最高板":'Int64',"连板数":'Int64',"每日涨停数":'Int64',"跌停数量":'Int64',"涨停数量":'Int64',"涨停打开":'Int64'})
+    df = pd.read_csv(CSV_FILE, dtype={"压力高度":'Int64',"大面数":'Int64',"最高板":'Int64',"连板数":'Int64',"每日涨停数":'Int64',"跌停数量":'Int64',"涨停数量":'Int64',"封板率":'Int64',"涨停打开":'Int64'})
 
     # Int64 类型可以处理 NaN 值
     return render_template('index.html', data=df.to_dict(orient='records'))

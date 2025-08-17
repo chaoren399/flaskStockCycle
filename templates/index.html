@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>CSV Editor</title>
+        <style>        .ratio-low {
+            color: red;
+            font-weight: bold;
+        }
+        .zero-value {
+            font-weight: bold;
+            color: black;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
 
@@ -34,15 +44,26 @@
             <td>{{ row['日期'] }}</td>
             <td>{{ row['每日涨停数'] }}</td>
             <td>{{ row['每日交易量'] }}</td>
-            <td>{{ row['上涨比率'] }}</td>
+
+            <td {% if row['上涨比率']|float >= 5 and row['上涨比率']|float <= 25 %}class="ratio-low"{% endif %}>
+                {{ row['上涨比率'] }}
+            </td>
             <td>{{ row['连板数'] }}</td>
             <td>{{ row['最高板'] }}</td>
             <td>{{ row['大面数'] }}</td>
             <td>{{ row['其他'] }}</td>
             <td>{{ row['压力高度'] }}</td>
-            <td>{{ row['跌停数量'] }}</td>
+
+            <td {% if row['跌停数量'] == 0 %}class="zero-value"{% endif %}>
+                {{ row['跌停数量'] }}
+            </td>
+
             <td>{{ row['涨停数量'] }}</td> <!-- 新增的涨停数量数据 -->
-            <td>{{ row['封板率'] }}</td> <!-- 新增的封板率数据 -->
+
+            <td {% if row['封板率']|float >= 79 %}class="zero-value"{% endif %}>
+                {{ row['封板率'] }}%
+            </td>
+
             <td>{{ row['涨停打开'] }}</td> <!-- 新增的涨停打开数据 -->
             <td>{{ row['备注'] }}</td> <!-- 新增的备注数据 -->
             <td><a href="{{ url_for('edit', id=loop.index0) }}">编辑</a></td>
