@@ -16,6 +16,10 @@
        font-size: 0.8em;
        color: #666;
    }
+         .low-limit-up {
+       font-weight: bold;
+       color: black;
+   }
 
 
     </style>
@@ -31,7 +35,9 @@
         <tr>
             <th>日期</th>
             <th>周几</th>
-            <th>每日涨停数</th>
+{#            <th>每日涨停数</th>#}
+            <th>大肉情绪</th> <!-- 2025年8月23日修改表头名称 -->
+
             <th>每日交易量</th>
             <th>上涨比率</th>
             <th>连板数</th>
@@ -50,13 +56,21 @@
         <tr>
             <td>{{ row['日期'] }}</td>
             <td class="weekday">{{ row['周几'] }}</td>
-            <td>{{ row['每日涨停数'] }}</td>
+
+            <td {% if row['大肉情绪']|int < 60 %}class="low-limit-up"{% endif %}>
+                     {{ row['大肉情绪'] }}
+            </td>
+
             <td>{{ row['每日交易量'] }}</td>
 
             <td {% if row['上涨比率']|float >= 1 and row['上涨比率']|float <= 25 %}class="ratio-low"{% endif %}>
                 {{ row['上涨比率'] }}
             </td>
-            <td>{{ row['连板数'] }}</td>
+
+           <td {% if row['连板数']|int < 10 %}class="low-limit-up"{% endif %}>
+               {{ row['连板数'] }}
+           </td>
+
             <td>{{ row['最高板'] }}</td>
             <td>{{ row['大面数'] }}</td>
             <td>{{ row['其他'] }}</td>
@@ -72,7 +86,10 @@
                 {{ row['封板率'] }}%
             </td>
 
-            <td>{{ row['涨停打开'] }}</td> <!-- 新增的涨停打开数据 -->
+{#            <td>{{ row['涨停打开'] }}</td> <!-- 新增的涨停打开数据 -->#}
+            <td {% if row['涨停打开']|int < 20 %}class="zero-value"{% endif %}>
+                {{ row['涨停打开'] }}
+            </td>
             <td>{{ row['备注'] }}</td> <!-- 新增的备注数据 -->
             <td><a href="{{ url_for('edit', id=loop.index0) }}">编辑</a></td>
         </tr>

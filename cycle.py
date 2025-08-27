@@ -15,7 +15,7 @@ def index():
     #处理 index.html  首页，显示数据带有小数的问问题
     #如果想让某一列显示整数，那么就添加这个表头
     # Int64 类型可以处理 NaN 值
-    df = pd.read_csv(CSV_FILE, dtype={"压力高度":'Int64',"大面数":'Int64',"最高板":'Int64',"连板数":'Int64',"每日涨停数":'Int64',"跌停数量":'Int64',"涨停数量":'Int64',"封板率":'Int64',"涨停打开":'Int64'})
+    df = pd.read_csv(CSV_FILE, dtype={"压力高度":'Int64',"大面数":'Int64',"最高板":'Int64',"连板数":'Int64',"大肉情绪":'Int64',"跌停数量":'Int64',"涨停数量":'Int64',"封板率":'Int64',"涨停打开":'Int64'})
 
     #2025年8月17日 新增功能
     # 添加星期几的计算（处理中文日期格式）
@@ -51,7 +51,7 @@ def edit(id):
     if request.method == 'POST':
         # 更新数据
         df.at[id, '日期'] = request.form['日期']
-        df.at[id, '每日涨停数'] = request.form['每日涨停数']
+        df.at[id, '大肉情绪'] = request.form['大肉情绪']
         df.at[id, '每日交易量'] = request.form['每日交易量']
         df.at[id, '上涨比率'] = request.form['上涨比率']
         df.at[id, '连板数'] = request.form['连板数']
@@ -80,7 +80,7 @@ def add():
     if request.method == 'POST':
         new_data = {
             '日期': request.form['日期'],
-            '每日涨停数': request.form['每日涨停数'],
+            '大肉情绪': request.form['大肉情绪'],
             '每日交易量': request.form['每日交易量'],
             '上涨比率': request.form['上涨比率'],
             '连板数': request.form['连板数'],
