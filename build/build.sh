@@ -18,7 +18,7 @@ cd flaskStockCycle
 
 
 # 首次部署或重新构建
-docker-compose up -d --build
+docker-compose up -d --build -f ./build/docker-compose.yaml
 
 # 后续启动/停止
 docker-compose start
