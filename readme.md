@@ -1,3 +1,9 @@
+
+部署： 
+build/build_uat.sh (这是测试环境用的， 用docker-compose 方式构建)
+
+
+
 #内网穿透：
 
 https://www.baimeidashu.com/20391.html
