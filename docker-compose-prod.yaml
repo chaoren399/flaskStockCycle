@@ -3,5 +3,7 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/baimeidashu/bmds:qingxuzhouqi-v1.0
     container_name: stock
     ports:
-      - "5010:5000"
+      - "5020:5000"
     restart: unless-stopped
+    volumes:
+      - ./data.csv:/app/data.csv
