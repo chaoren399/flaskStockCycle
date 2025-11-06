@@ -5,7 +5,11 @@ git clone https://gitee.com/wang-huamao/flaskStockCycle.git
 
 cd flaskStockCycle
 
-
+# 确保 Dockerfile 存在
+if [ ! -f Dockerfile ]; then
+    echo "错误: Dockerfile 不存在"
+    exit 1
+fi
 
 
 #
