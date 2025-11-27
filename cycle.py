@@ -65,6 +65,7 @@ def edit(id):
         df.at[id, '封板率'] = request.form['封板率']  # 新增封板率字段
 
         df.at[id, '涨停打开'] = request.form['涨停打开']  # 新增涨停打开字段
+        df.at[id, '情绪值'] = request.form['情绪值']  #  新增情绪值字段
         df.at[id, '备注'] = request.form['备注']  # 新增备注字段
 
         df.to_csv(CSV_FILE, index=False)
@@ -92,6 +93,7 @@ def add():
             '涨停数量': request.form['涨停数量'], # 新增涨停数量字段
             '封板率': request.form['封板率'],  # 新增封板率字段
             '涨停打开': request.form['涨停打开'],  # 新增涨停打开字段
+            '情绪值': request.form['情绪值'],  # 新增情绪值字段
             '备注': request.form['备注']  # 新增备注字段
         }
 
