@@ -1,3 +1,5 @@
+https://github.com/chaoren399/flaskStockCycle.git
+
 
 部署： 
 测试环境：   
