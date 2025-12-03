@@ -7,7 +7,7 @@ LABEL  mainatiner="baimeidashu"
 WORKDIR /app
 
 
-COPY  ./*   /app
+COPY  .   /app
 
 RUN cat /app/requirements.txt
 
