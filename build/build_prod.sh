@@ -7,8 +7,8 @@ git clone https://github.com/chaoren399/flaskStockCycle.git
 cd flaskStockCycle
 
 # 确保 Dockerfile 存在
-if [ ! -f Dockerfile ]; then
-    echo "错误: Dockerfile 不存在"
+if [ ! -f Dockerfile_prod ]; then
+    echo "错误: Dockerfile_prod 不存在"
     exit 1
 fi
 pwd
@@ -23,7 +23,7 @@ fi
 
 # 设置变量
 IMAGE_NAME="bmds"
-IMAGE_TAG="qingxuzhouqi-v3.1"
+IMAGE_TAG="qingxuzhouqi-v3.2"
 DOCKERFILE_PATH="./Dockerfile_prod"
 BUILD_CONTEXT="./"
 

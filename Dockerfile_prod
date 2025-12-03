@@ -5,9 +5,9 @@ FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
 LABEL  mainatiner="baimeidashu"
 #设置工作目录为/app
 WORKDIR /app
-ARG appName=flaskStockCycle
-RUN mv $appName  /app
 
+
+COPY  ./*   /app
 
 RUN cat /app/requirements.txt
 
