@@ -1,4 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+import csv
+import os
+
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, jsonify
 import pandas as pd
 
 app = Flask(__name__)
@@ -160,12 +163,8 @@ def zhouqi():
 @app.route('/qingxu')
 def qingxu():
     msg = " \n my name is baimeidashu.com , China up!"
-
-
-
     # stockdata_path = './data/example.csv'
     stockdata_path = 'data.csv'
-
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
     # 获取最近90个数据条目
@@ -188,10 +187,8 @@ def qingxu():
     df4=df.iloc[:,4].values.tolist()
     #最高板
     df5=df.iloc[:,5].values.tolist()
-
     #大面数
     df6=df.iloc[:,6].values.tolist()
-
     #最高板名称
     df7=df.iloc[:,7].values.tolist()
     #压力高度
@@ -202,13 +199,49 @@ def qingxu():
     print( df2)
     print ('------------------------qignxu------------------')
     print( df)
-
-
-
     # print(df_sorted_index)
-
-
     return render_template("cycle.html" ,df0 =df0,df1=df1,df2=df2,df3=df3,df4=df4,df5=df5,df6=df6,df7=df7,df8=df8,df9=df9)
+
+# 2 周期图展示页
+@app.route('/qingxu2')
+def qingxu2():
+
+
+    return  render_template("stock-web-vue.html")
+
+### 处理stock-web-vue.html 的data.csv 数据
+@app.route('/api/chart-data/json')
+def get_chart_data_json():
+    """
+    提供JSON格式的图表数据
+    """
+    try:
+        data = []
+        # 确保 CSV_FILE 路径正确
+        csv_path = os.path.join(os.getcwd(), CSV_FILE)  # 使用绝对路径
+
+
+        if not os.path.exists(csv_path):
+            return jsonify({
+                "status": "error",
+                "message": f"数据文件未找到: {csv_path}"
+            }), 404
+
+        with open(csv_path, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                data.append(row)
+
+        return jsonify({
+            "status": "success",
+            "data": data
+        })
+
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"读取数据时发生错误: {str(e)}"
+        }), 500
 
 
 ###########################以下是测试##########################
