@@ -1,7 +1,8 @@
 #!/bin/bash
 echo "开始安装..."
 rm -rf flaskStockCycle
-git clone https://gitee.com/wang-huamao/flaskStockCycle.git
+#git clone https://gitee.com/wang-huamao/flaskStockCycle.git
+git clone https://github.com/chaoren399/flaskStockCycle.git
 
 cd flaskStockCycle
 
@@ -22,8 +23,8 @@ fi
 
 # 设置变量
 IMAGE_NAME="bmds"
-IMAGE_TAG="qingxuzhouqi-v2.4"
-DOCKERFILE_PATH="./Dockerfile"
+IMAGE_TAG="qingxuzhouqi-v3.1"
+DOCKERFILE_PATH="./Dockerfile_prod"
 BUILD_CONTEXT="./"
 
 # 构建 Docker 镜像
