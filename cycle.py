@@ -207,7 +207,18 @@ def qingxu():
 def qingxu2():
 
 
-    return  render_template("stock-web-vue.html")
+    # return  render_template("stock-web-vue.html")
+    return  render_template("stock-web-vue2.html")
+
+# 提供 data.csv 文件
+#  fetch('./data.csv')
+#stock-web-vue2.html
+@app.route('/data.csv')
+def serve_data_csv():
+    """
+    提供 data.csv 文件的访问
+    """
+    return send_from_directory('.', 'data.csv')
 
 ### 处理stock-web-vue.html 的data.csv 数据
 @app.route('/api/chart-data/json')

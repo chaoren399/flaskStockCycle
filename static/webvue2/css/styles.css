@@ -1,0 +1,386 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0a0e27;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部提示文本 */
+.top-tip {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+  height: 20px;
+}
+
+/* 搜索框 */
+.search-bar {
+  height: 40px;
+  background: linear-gradient(to right, #999, #999);
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+
+/* 图例容器 */
+.legend-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 16px;
+}
+
+/* 图例 */
+.legend {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* 上传容器 */
+.upload-container {
+  display: flex;
+  align-items: center;
+}
+
+/* 上传按钮 */
+.upload-btn {
+  background-color: #1e2746;
+  color: #ffffff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upload-btn:hover {
+  background-color: #2a345a;
+  border-color: #555;
+}
+
+.upload-btn:active {
+  background-color: #181f38;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  /* Add opacity effect for disabled state */
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.legend-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Add style for inactive legend items */
+.legend-item:not(.active) {
+  opacity: 0.5;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* 右侧信息面板 */
+/* Remove old right-panel styles and add new hover tooltip styles */
+.right-panel {
+  display: none;
+}
+
+/* Dynamic hover tooltip that follows mouse */
+.hover-tooltip {
+  position: fixed;
+  background-color: rgba(10, 14, 39, 0.95);
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 12px;
+  min-width: 130px;
+  font-size: 12px;
+  z-index: 1000;
+  display: none;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hover-tooltip.active {
+  display: block;
+}
+
+.hover-tooltip .date-display {
+  font-weight: bold;
+  color: #ff6b35;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.hover-tooltip .info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  gap: 8px;
+}
+
+.hover-tooltip .info-label {
+  color: #888;
+}
+
+.hover-tooltip .info-value {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* 图表容器 */
+.chart-container {
+  flex: 1;
+  position: relative;
+  background-color: #0a0e27;
+  border: 1px solid #222;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Y轴标签 */
+.y-axis {
+  position: absolute;
+  left: 8px;
+  top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.y-label {
+  font-size: 10px;
+  color: #666;
+  position: absolute;
+  right: 100%;
+  transform: translateY(-50%);
+  margin-right: 8px;
+}
+
+/* 底部公司名称标签 */
+.company-labels {
+  display: flex;
+  gap: 0;
+  background-color: #0a0e27;
+  border-top: 1px solid #222;
+  padding: 4px 42px;
+  overflow-x: auto;
+  font-size: 12px;
+  height: 90px;
+  align-items: center;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.company-name {
+  flex: 1 0 auto;
+  padding: 8px 0;
+  border-right: 1px solid #222;
+  white-space: nowrap;
+  color: #ffb800;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.company-name:hover {
+  background-color: #1a1f3a;
+}
+
+.company-name:last-child {
+  border-right: none;
+}
+
+/* Added time range slider styles */
+/* Modified time range slider to occupy full width */
+.time-range-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #0f1429;
+  border-top: 1px solid #222;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #888;
+  width: 100%;
+}
+
+.dual-slider {
+  flex: 1;
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.slider-track {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to right, #333 0%, #444 50%, #333 100%);
+  border-radius: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto; /* Allow track to be clickable for slider movement */
+  cursor: pointer;
+}
+
+.slider-range {
+  position: absolute;
+  height: 100%; /* Same height as track */
+  background: linear-gradient(to right, #333 0%, #444 50%, #333 100%); /* Same color as track */
+  border-radius: 3px;
+  top: 0;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  z-index: 5;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(to bottom, #777, #555);
+  border: 1px solid #666;
+  border-radius: 3px;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(to bottom, #777, #555);
+  border: 1px solid #666;
+  border-radius: 3px;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.slider::-moz-range-track {
+  background: none;
+  border: none;
+}
+
+.time-range-display {
+  color: #4dd4ff;
+  font-weight: bold;
+  min-width: 60px;
+  text-align: right;
+  font-size: 12px;
+}
+
+/* Remove old slider styles */
+.time-range-slider {
+  display: none;
+}
+
+.time-range-slider::-webkit-slider-thumb {
+  display: none;
+}
+
+.time-range-slider::-moz-range-thumb {
+  display: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .legend {
+    gap: 15px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 8px 12px;
+  }
+
+  .legend {
+    flex-wrap: wrap;
+  }
+
+  /* .right-panel was removed, now use .hover-tooltip if needed for responsive, but it's fixed position */
+  /* .right-panel is display: none; now, so this media query for it is no longer relevant for the original panel */
+  /* .right-panel {
+    font-size: 11px;
+    min-width: 100px;
+  } */
+
+  .time-range-slider-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .time-range-slider {
+    max-width: 100%;
+    width: 100%;
+  }
+}

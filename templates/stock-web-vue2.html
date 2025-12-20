@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股票数据可视化仪表板</title>
+    <link rel="stylesheet" href="./static/webvue2/css/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 顶部提示文本 -->
+        <div class="top-tip">请编辑高度图表支持左右拖动调整时间</div>
+
+        <!-- 搜索框 -->
+        <div class="search-bar"></div>
+
+        <!-- 图例和上传按钮容器 -->
+        <div class="legend-container">
+            <!-- 图例 -->
+            <!-- Remove first two legend items (压力高度 and 最新高度) as they will be shown by default -->
+            <div class="legend" id="legendContainer">
+                <span class="legend-item" data-line-index="2">
+                    <span class="legend-dot" style="background-color: #FF9F43;"></span>
+                    <span>上涨比率</span>
+                </span>
+                <span class="legend-item" data-line-index="3">
+                    <span class="legend-dot" style="background-color: #00D4FF;"></span>
+                    <span>大面情绪</span>
+                </span>
+                <span class="legend-item" data-line-index="4">
+                    <span class="legend-dot" style="background-color: #A29BFE;"></span>
+                    <span>大肉情绪</span>
+                </span>
+                <span class="legend-item" data-line-index="5">
+                    <span class="legend-dot" style="background-color: #FFD700;"></span>
+                    <span>连板数</span>
+                </span>
+                <span class="legend-item" data-line-index="6">
+                    <span class="legend-dot" style="background-color: #FF6B9D;"></span>
+                    <span>情绪值</span>
+                </span>
+            </div>
+            <!-- 文件加载指示器 -->
+            <div class="upload-container">
+                <span id="loadingStatus">正在加载数据...</span>
+            </div>
+        </div>
+
+        <!-- 右侧信息面板 -->
+        <!-- Removed the fixed right-side panel, replaced with dynamic hover tooltip -->
+        <div class="hover-tooltip" id="hoverTooltip">
+            <div class="date-display"></div>
+            <div class="info-item">
+                <span class="info-label">压力高度：</span>
+                <span class="info-value"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">最新高度：</span>
+                <span class="info-value"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">上涨比率：</span>
+                <span class="info-value"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">大面情绪：</span>
+                <span class="info-value"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">大肉情绪：</span>
+                <span class="info-value"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">连板数：</span>
+                <span class="info-value"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">情绪值：</span>
+                <span class="info-value"></span>
+            </div>
+        </div>
+
+        <!-- 图表容器 -->
+        <div class="chart-container">
+            <canvas id="mainChart"></canvas>
+        </div>
+
+        <!-- 时间范围调整滑动条 -->
+        <div class="time-range-slider-container">
+            <div class="dual-slider">
+                <!-- updated slider max value to match data length -->
+                <input type="range" id="sliderMin" class="slider" min="0" max="274" value="254" step="1">
+                <input type="range" id="sliderMax" class="slider" min="0" max="274" value="274" step="1">
+                <div class="slider-track">
+                    <div class="slider-range"></div>
+                </div>
+            </div>
+            <div class="time-range-display">
+                <span id="visibleDates">全部</span>
+            </div>
+        </div>
+
+        <!-- 底部公司名称标签 -->
+        <div class="company-labels">
+            <!-- 公司标签内容保持不变 -->
+            ...
+        </div>
+    </div>
+
+    <!-- 添加自动加载脚本 -->
+    <script>
+        // 页面加载完成后自动加载数据
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCSVData();
+        });
+
+        function loadCSVData() {
+            const loadingStatus = document.getElementById('loadingStatus');
+
+            fetch('./data.csv')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('无法加载数据文件');
+                    }
+                    return response.text();
+                })
+                .then(csvText => {
+                    // 将CSV文本传递给原有的处理函数
+                    processData(csvText);
+                    loadingStatus.textContent = '数据加载成功';
+                })
+                .catch(error => {
+                    console.error('加载CSV文件出错:', error);
+                    loadingStatus.textContent = '数据加载失败';
+                });
+        }
+
+        // 这个函数需要与你现有的 chart.js 中的数据处理函数对接
+        function processData(csvText) {
+            // 这里应该调用 chart.js 中处理数据的函数
+            // 例如：parseCSVData(csvText) 或其他类似函数
+            if (typeof parseCSVData === 'function') {
+                parseCSVData(csvText);
+            } else {
+                console.warn('未找到数据处理函数，请检查 chart.js 文件');
+            }
+        }
+    </script>
+
+    <script src="./static/webvue2/js/chart.js"></script>
+</body>
+</html>
