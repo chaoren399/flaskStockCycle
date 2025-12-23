@@ -6,6 +6,9 @@ https://github.com/chaoren399/flaskStockCycle.git
 build/build_uat.sh (这是测试环境用的， 用docker-compose 方式构建)
 
 生产环境：
+git config --global http.proxy 'socks5://192.168.120.237:1081'
+git config --global https.proxy 'socks5://192.168.120.237:1081'
+
 10.0.0.215 
 build/build_prod.sh (这是生产环境用的， 用docker-compose 构建)
 再本地机器上先执行bulid_prod.sh 构建镜像 上传到阿里云 (需要把.env 文件复制到 脚本的当前目录目录下， 然后执行脚本)
