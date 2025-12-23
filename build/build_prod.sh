@@ -23,7 +23,7 @@ fi
 
 # 设置变量
 IMAGE_NAME="bmds"
-IMAGE_TAG="qingxuzhouqi-v3.2"
+IMAGE_TAG="qingxuzhouqi-v4.0"
 DOCKERFILE_PATH="./Dockerfile_prod"
 BUILD_CONTEXT="./"
 

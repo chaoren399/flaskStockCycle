@@ -15,7 +15,7 @@ class StockDataChart {
     this.offsetX = 0
     this.isMouseDown = false
     this.lastMouseX = 0
-    this.visibleDaysCount = 15 // Default visible days, will be adjusted after data loads
+    this.visibleDaysCount = 21 // Default visible days, will be adjusted after data loads
     this.tooltipVisible = false
     this.tooltipData = {}
     
@@ -249,7 +249,8 @@ class StockDataChart {
       sliderMax.max = totalDays;
       
       // 设置初始值为显示最新的15条数据
-      const startValue = Math.max(0, totalDays - this.visibleDaysCount);
+      // const startValue = Math.max(0, totalDays - this.visibleDaysCount);
+      const startValue = Math.max(0, totalDays - 21);
       sliderMin.value = startValue;
       sliderMax.value = totalDays;
       
