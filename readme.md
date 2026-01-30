@@ -6,6 +6,10 @@ https://github.com/chaoren399/flaskStockCycle.git
 build/build_uat.sh (这是测试环境用的， 用docker-compose 方式构建)
 
 生产环境：
+
+在10.0.0.215  /app/scripts/stock
+执行 脚本 build_prod.sh（修改镜像版本）
+然后去47 服务器修改docker-compose.yaml 文件 运行 docker-compose up -d
 git config --global http.proxy 'socks5://192.168.120.237:1081'
 git config --global https.proxy 'socks5://192.168.120.237:1081'
 
