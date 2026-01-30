@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>CSV Editor</title>
         <style>        .ratio-low {
-            color: red;
+            color: red; /* 红色 */
             font-weight: bold;
         }
         .zero-value {
@@ -20,6 +20,8 @@
        font-weight: bold;
        color: black;
    }
+
+
 
 
     </style>
@@ -74,7 +76,12 @@
                {{ row['连板数'] }}
            </td>
 
-            <td>{{ row['最高板'] }}</td>
+{#            <td>{{ row['最高板'] }}</td>#}
+
+        <td {% if row['最高板']|int <= 4 %}class="ratio-low "{% endif %}>
+            {{ row['最高板'] }}
+        </td>
+
             <td>{{ row['大面数'] }}</td>
             <td>{{ row['其他'] }}</td>
             <td>{{ row['压力高度'] }}</td>
