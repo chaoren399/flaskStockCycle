@@ -6,8 +6,8 @@ import pandas as pd
 
 app = Flask(__name__)
 
-CSV_FILE = 'data2.csv'
-# CSV_FILE = 'data1.csv'
+# CSV_FILE = 'data2.csv'
+CSV_FILE = 'data.csv'
 
 #1 情绪图展示页：
 
@@ -166,7 +166,7 @@ def zhouqi():
 def qingxu():
     msg = " \n my name is baimeidashu.com , China up!"
     # stockdata_path = './data/example.csv'
-    stockdata_path = 'data2.csv'
+    stockdata_path = 'data.csv'
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
     # 获取最近90个数据条目
@@ -212,15 +212,15 @@ def qingxu2():
     # return  render_template("stock-web-vue.html")
     return  render_template("stock-web-vue2.html")
 
-# 提供 data2.csv 文件
-#  fetch('./data2.csv')
+# 提供 data.csv 文件
+#  fetch('./data.csv')
 #stock-web-vue2.html
 @app.route('/data.csv')
 def serve_data_csv():
     """
-    提供 data2.csv 文件的访问
+    提供 data3.csv 文件的访问
     """
-    return send_from_directory('.', 'data2.csv')
+    return send_from_directory('.', 'data.csv')
 
 ### 处理stock-web-vue.html 的data.csv 数据
 @app.route('/api/chart-data/json')
@@ -260,7 +260,7 @@ def get_chart_data_json():
 ###########################以下是测试##########################
 @app.route('/test')
 def test():
-    stockdata_path = 'data2.csv'
+    stockdata_path = 'data3.csv'
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
     df = df.head(65)
@@ -292,7 +292,7 @@ def test():
 
 @app.route('/test2')
 def test2():
-    stockdata_path = 'data2.csv'
+    stockdata_path = 'data3.csv'
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
     df = df.head(65)
@@ -323,7 +323,7 @@ def test2():
 
 @app.route('/test3')
 def test3():
-    stockdata_path = 'data2.csv'
+    stockdata_path = 'data3.csv'
     df = pd.read_csv(stockdata_path)
     #获取最近3个月数据：
     # df = df.head(65)

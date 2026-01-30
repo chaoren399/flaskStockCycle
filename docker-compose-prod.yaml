@@ -6,4 +6,4 @@ services:
       - "5020:5000"
     restart: unless-stopped
     volumes:
-      - ./data2.csv:/app/data2.csv
+      - ./data3.csv:/app/data3.csv
