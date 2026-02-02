@@ -86,7 +86,7 @@
             <td>{{ row['其他'] }}</td>
             <td>{{ row['压力高度'] }}</td>
 
-            <td {% if row['跌停数量'] == 0 %}class="zero-value"{% endif %}>
+            <td {% if row['跌停数量']|int >=50 %}class="ratio-low"{% endif %}>
                 {{ row['跌停数量'] }}
             </td>
 
