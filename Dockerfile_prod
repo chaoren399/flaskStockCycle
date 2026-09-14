@@ -1,6 +1,7 @@
 
 #3 使用官方的Python运行时作为父镜像
-FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
+#FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20 AS prepare
+FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python_base:3.8.20 AS prepare
 ##第2部分： 维护者信息
 LABEL  mainatiner="baimeidashu"
 #设置工作目录为/app
@@ -26,7 +27,10 @@ ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
 
 # 打印解释器与源配置，安装失败时能直接看出用的哪个源
 RUN python -V && pip -V && pip config list
-RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
+
+
+#这一步放到 基础镜像里了 registry.cn-hangzhou.aliyuncs.com/baimeidashu/python_base:3.8.20
+#RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
 
 # --no-cache-dir 只对 wheel 缓存生效，同时显式加超时与重试，网络抖动时不会直接失败
 RUN pip install --no-cache-dir --retries 10 --timeout 120 -r /app/requirements.txt
