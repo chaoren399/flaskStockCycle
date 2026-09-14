@@ -12,15 +12,26 @@ COPY  .   /app
 RUN cat /app/requirements.txt
 
 ## 安装依赖
+# 用环境变量指定镜像源：优先级高于 pip config
+# 主源换阿里云 PyPI（镜像仓库本来就在杭州，同地域比清华源稳），清华源作备用源：
+# 单源抖动返回空索引时会报 "from versions: none"，双源可规避
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/ \
+    PIP_EXTRA_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
+    PIP_TRUSTED_HOST=mirrors.aliyun.com \
+    PIP_TIMEOUT=120 \
+    PIP_DEFAULT_TIMEOUT=120 \
+    PIP_RETRIES=10 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+# 注意：Python 3.8 不要无脑 --upgrade pip（新版 pip 已放弃 3.8），如确需升级请 pip install "pip<25.1"
+
+# 打印解释器与源配置，安装失败时能直接看出用的哪个源
+RUN python -V && pip -V && pip config list
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
 
+# --no-cache-dir 只对 wheel 缓存生效，同时显式加超时与重试，网络抖动时不会直接失败
+RUN pip install --no-cache-dir --retries 10 --timeout 120 -r /app/requirements.txt
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-
-
-
-RUN ls -l
+RUN pip list && ls -l
 
 # 将/etc/localtime链接到上海时区文件
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
