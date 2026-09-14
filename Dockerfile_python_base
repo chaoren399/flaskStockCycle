@@ -1,0 +1,9 @@
+#构建一个自定义的python 基础镜像Dockerfile_python_base
+
+FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20
+
+## 安装依赖
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
+
+
+
