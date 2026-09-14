@@ -6,5 +6,11 @@ FROM registry.cn-hangzhou.aliyuncs.com/baimeidashu/python:3.8.20
 ## 安装依赖
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple  &&  pip install --upgrade pip
 
+## 安装项目基础依赖（flask / pandas / numpy 固定版本）
+RUN pip install --no-cache-dir \
+    flask==3.0.3 \
+    pandas==2.0.3 \
+    numpy==1.24.3
+
 
 
