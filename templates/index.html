@@ -21,8 +21,29 @@
        color: black;
    }
 
+   /* 表格容器：允许垂直滚动 */
+   .table-wrapper {
+       max-height: calc(100vh - 160px);
+       overflow: auto;
+       border: 1px solid #ccc;
+   }
 
+   /* 表头固定 */
+   table {
+       border-collapse: collapse;
+       width: 100%;
+   }
 
+   th {
+       position: sticky;
+       top: 0;
+       background-color: #f2f2f2;
+       z-index: 1;
+   }
+
+   td, th {
+       padding: 4px 6px;
+   }
 
     </style>
 </head>
@@ -34,6 +55,7 @@
         <h1>CSV 数据编辑器</h1>
     <a href="{{ url_for('add') }}">新增数据</a>
 
+    <div class="table-wrapper">
     <table border="1">
         <tr>
             <th>日期</th>
@@ -110,5 +132,6 @@
         </tr>
         {% endfor %}
     </table>
+    </div>
 </body>
 </html>
