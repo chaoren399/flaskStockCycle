@@ -8,7 +8,7 @@ build/build_uat.sh (这是测试环境用的， 用docker-compose 方式构建)
 生产环境：
 
 在10.0.0.215  /app/scripts/stock
-执行 脚本 build_prod.sh（修改镜像版本）
+执行 脚本 bash build_prod.sh（修改镜像版本 注意用bash 否则出错）
 
 然后去8.130.78. 服务器修改docker-compose.yaml 文件 运行 docker-compose up -d
 
