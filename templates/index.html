@@ -99,11 +99,64 @@
    }
 
    .btn-link.btn-primary:hover {
-       background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-       box-shadow: 0 4px 10px rgba(37,99,235,0.25);
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      box-shadow: 0 4px 10px rgba(37,99,235,0.25);
    }
 
-    </style>
+   /* 分页 */
+   .pagination {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      background-color: #fff;
+      border: 1px solid #e0e4e8;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+   }
+
+   .pagination .page-info {
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a5568;
+      margin-right: 8px;
+   }
+
+   .pagination .page-btn {
+      display: inline-block;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #4a5568;
+      text-decoration: none;
+      background-color: #fff;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+   }
+
+   .pagination .page-btn:hover {
+      color: #2563eb;
+      border-color: #2563eb;
+   }
+
+   .pagination .page-btn.active {
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-color: #1d4ed8;
+      box-shadow: 0 2px 6px rgba(37,99,235,0.25);
+   }
+
+   .pagination .page-btn.disabled {
+      color: #a0aec0;
+      border-color: #e2e8f0;
+      pointer-events: none;
+      background-color: #f7fafc;
+   }
+
+   </style>
 </head>
 <body>
 
@@ -114,6 +167,29 @@
             <a class="btn-link" href="{{ url_for('qingxu2') }}" target="_blank">折线图2</a>
             <a class="btn-link btn-primary" href="{{ url_for('add') }}">+ 新增数据</a>
         </div>
+    </div>
+
+    <div class="pagination">
+        <span class="page-info">第 {{ page }} / {{ total_pages }} 页（共 {{ total }} 条，每页 {{ per_page }} 条）</span>
+        {% if page > 1 %}
+        <a class="page-btn" href="{{ url_for('index', page=page-1) }}">上一页</a>
+        {% else %}
+        <span class="page-btn disabled">上一页</span>
+        {% endif %}
+
+        {% for p in range(1, total_pages+1) %}
+            {% if p == page %}
+            <span class="page-btn active">{{ p }}</span>
+            {% else %}
+            <a class="page-btn" href="{{ url_for('index', page=p) }}">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page < total_pages %}
+        <a class="page-btn" href="{{ url_for('index', page=page+1) }}">下一页</a>
+        {% else %}
+        <span class="page-btn disabled">下一页</span>
+        {% endif %}
     </div>
 
     <div class="table-wrapper">
@@ -189,7 +265,7 @@
 
             <td>{{ row['备注'] }}</td> <!-- 新增的备注数据 -->
             <td>{{ row['备注2'] }}</td> <!-- 新增的备注2数据 -->
-            <td><a href="{{ url_for('edit', id=loop.index0) }}">编辑</a></td>
+            <td><a href="{{ url_for('edit', id=start_index+loop.index0) }}">编辑</a></td>
         </tr>
         {% endfor %}
     </table>

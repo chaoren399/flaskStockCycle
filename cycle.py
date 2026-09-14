@@ -43,8 +43,26 @@ def index():
     # 转换回中文日期格式用于显示
     df['日期'] = df['日期'].dt.strftime('%Y年%m月%d日')
 
+    records = df.to_dict(orient='records')
 
-    return render_template('index.html', data=df.to_dict(orient='records'))
+    # 分页：每页 180 条，默认显示第 1 页（最新数据）
+    per_page = 180
+    page = request.args.get('page', 1, type=int)
+    total = len(records)
+    total_pages = max(1, (total + per_page - 1) // per_page)
+
+    if page < 1:
+        page = 1
+    if page > total_pages:
+        page = total_pages
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    page_data = records[start:end]
+
+    return render_template('index.html', data=page_data,
+                           page=page, total_pages=total_pages,
+                           total=total, per_page=per_page, start_index=start)
 
 
 # 编辑页面：显示和处理编辑操作
