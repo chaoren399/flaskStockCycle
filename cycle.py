@@ -40,8 +40,8 @@ def index():
     }
     df['周几'] = df['周几'].map(weekday_mapping).fillna('')
 
-    # 转换回中文日期格式用于显示
-    df['日期'] = df['日期'].dt.strftime('%Y年%m月%d日')
+    # 日期显示格式：如 20260915
+    df['日期'] = df['日期'].dt.strftime('%Y%m%d')
 
     records = df.to_dict(orient='records')
 
